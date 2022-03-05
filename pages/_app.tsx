@@ -10,7 +10,7 @@ import '../styles/index.css'
  */
 const App = ({ Component, pageProps }: AppProps) => {
   const client = new ApolloClient({
-    uri: 'http://localhost:3000/api/graphql',
+    uri: 'http://localhost:8080/v1/graphql',
     cache: new InMemoryCache({
       /**
        * Why do we need typePolicies and the merge function? Read more about it
@@ -18,17 +18,17 @@ const App = ({ Component, pageProps }: AppProps) => {
        * @see https://www.apollographql.com/docs/react/caching/cache-configuration/#generating-unique-identifiers
        * @see https://www.apollographql.com/docs/react/caching/cache-field-behavior/#merging-non-normalized-objects
        */
-      typePolicies: {
-        Query: {
-          fields: {
-            todos: {
-              merge(existing, incoming) {
-                return incoming
-              },
-            },
-          },
-        },
-      },
+      // typePolicies: {
+      //   Query: {
+      //     fields: {
+      //       todos: {
+      //         merge(existing, incoming) {
+      //           return incoming
+      //         },
+      //       },
+      //     },
+      //   },
+      // },
     }),
   })
 

@@ -1,67 +1,76 @@
 import React, { FunctionComponent, useState } from 'react'
-import classnames from 'classnames'
-import { gql, useQuery, useMutation } from '@apollo/client'
-import map from 'lodash.map'
+// import classnames from 'classnames'
+import { gql, useQuery } from '@apollo/client'
+// import map from 'lodash.map'
 
-import { TodoItem, Todo, Todos } from '../components/todo'
+// import { TodoItem, Todo, Todos } from '../components/todo'
 import { LoadingSpinner } from '../components/spinner'
 
-const TodosQuery = gql`
-  query Todos {
-    todos {
-      id
-      title
-      done
-    }
-  }
-`
+// const TodosQuery = gql`
+//   query Todos {
+//     todos {
+//       id
+//       title
+//       done
+//     }
+//   }
+// `
+// const AddTodoMutation = gql`
+//   mutation AddTodos($title: String!) {
+//     addTodo(title: $title) {
+//       id
+//       title
+//       done
+//     }
+//   }
+// `
+// const UpdateTodoMutation = gql`
+//   mutation UpdateTodos($updatedTodo: UpdatedTodo!) {
+//     updateTodo(updatedTodo: $updatedTodo) {
+//       id
+//       title
+//       done
+//     }
+//   }
+// `
+// const DeleteTodoMutation = gql`
+//   mutation DeleteTodos($id: Int!) {
+//     deleteTodo(id: $id)
+//   }
+// `
 
-const AddTodoMutation = gql`
-  mutation AddTodos($title: String!) {
-    addTodo(title: $title) {
+const FEATURE_FLAGS_QUERY = gql`
+  query FeatureFlag {
+    feature_flags {
       id
-      title
-      done
     }
-  }
-`
-const UpdateTodoMutation = gql`
-  mutation UpdateTodos($updatedTodo: UpdatedTodo!) {
-    updateTodo(updatedTodo: $updatedTodo) {
-      id
-      title
-      done
-    }
-  }
-`
-const DeleteTodoMutation = gql`
-  mutation DeleteTodos($id: Int!) {
-    deleteTodo(id: $id)
   }
 `
 
 const Page: FunctionComponent = () => {
-  const [title, setTitle] = useState<string>('')
+  // const [title, setTitle] = useState<string>('')
 
-  const { data, loading } = useQuery<{ todos: Todos }>(TodosQuery)
-  const [addTodo] = useMutation<Todo, { title: Todo['title'] }>(
-    AddTodoMutation,
-    {
-      refetchQueries: [{ query: TodosQuery }],
-    },
-  )
-  const [updateTodo] = useMutation<
-    Todo,
-    { updatedTodo: Partial<Todo> & { id: number } }
-  >(UpdateTodoMutation, {
-    refetchQueries: [{ query: TodosQuery }],
-  })
-  const [deleteTodo] = useMutation<Todo, { id: Todo['id'] }>(
-    DeleteTodoMutation,
-    {
-      refetchQueries: [{ query: TodosQuery }],
-    },
-  )
+  const { data, loading } = useQuery(FEATURE_FLAGS_QUERY)
+  console.log('loading: ', loading)
+  console.log('data: ', data)
+  // const [addTodo] = useMutation<Todo, { title: Todo['title'] }>(
+  //   AddTodoMutation,
+  //   {
+  //     refetchQueries: [{ query: TodosQuery }],
+  //   },
+  // )
+  // const [updateTodo] = useMutation<
+  //   Todo,
+  //   { updatedTodo: Partial<Todo> & { id: number } }
+  // >(UpdateTodoMutation, {
+  //   refetchQueries: [{ query: TodosQuery }],
+  // })
+  // const [deleteTodo] = useMutation<Todo, { id: Todo['id'] }>(
+  //   DeleteTodoMutation,
+  //   {
+  //     refetchQueries: [{ query: TodosQuery }],
+  //   },
+  // )
 
   return (
     <div className="py-20">
@@ -69,7 +78,7 @@ const Page: FunctionComponent = () => {
         <div className="bg-white rounded shadow p-6 mb-4 w-full lg:w-9/12">
           <div className="mb-4">
             <h1 className="text-4xl text-gray-darkest">Todo List</h1>
-            <form
+            {/* <form
               className="flex my-5"
               onSubmit={e => {
                 e.preventDefault()
@@ -95,7 +104,7 @@ const Page: FunctionComponent = () => {
               >
                 Add
               </button>
-            </form>
+            </form> */}
             <div>
               {loading ? (
                 <div className="flex justify-center my-5">
@@ -103,7 +112,7 @@ const Page: FunctionComponent = () => {
                 </div>
               ) : (
                 <ul>
-                  {map(data?.todos, (todo: Todo) => (
+                  {/* {map(data?.todos, (todo: Todo) => (
                     <li key={todo.id}>
                       <TodoItem
                         todo={todo}
@@ -123,7 +132,7 @@ const Page: FunctionComponent = () => {
                         }
                       />
                     </li>
-                  ))}
+                  ))} */}
                 </ul>
               )}
             </div>
